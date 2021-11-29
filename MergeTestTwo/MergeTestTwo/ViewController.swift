@@ -18,14 +18,33 @@ class ViewController: UIViewController {
         return button
     }()
 
+    let countLabel: UILabel = {
+        let countLabel = UILabel()
+        countLabel.textColor = UIColor.white
+        countLabel.backgroundColor = UIColor.blue
+        countLabel.textAlignment = .center
+        return countLabel
+    }()
+
     var bgValue: Int = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(centerButton)
+        self.view.addSubview(countLabel)
         centerButton.translatesAutoresizingMaskIntoConstraints = false
+        countLabel.translatesAutoresizingMaskIntoConstraints = false
+
         centerButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         centerButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         centerButton.addTarget(self, action: #selector(setBgColor), for: .touchUpInside)
+
+        countLabel.bottomAnchor.constraint(equalTo: centerButton.topAnchor, constant: -20).isActive = true
+        countLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        setCountValue()
+    }
+
+    func setCountValue() {
+        countLabel.text = "\(bgValue)"
     }
 
     @objc func setBgColor() {
@@ -45,6 +64,7 @@ class ViewController: UIViewController {
         }
         bgValue += 1
         bgValue = bgValue%6
+        setCountValue()
     }
 }
 
